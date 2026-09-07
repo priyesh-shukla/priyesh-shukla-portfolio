@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priyesh Shukla — Senior Frontend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#15141c;
+    --panel:#1c1b26;
+    --panel-2:#211f2c;
+    --ink:#f3f1f8;
+    --muted:#9d99ac;
+    --line:rgba(243,241,248,0.09);
+    --accent:#ff7a59;
+    --accent-soft:rgba(255,122,89,0.14);
+    --gold:#ffcf6b;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+
+  ::selection{ background:var(--accent); color:#1b1220; }
+  a{ color:inherit; }
+
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+
+  /* ---------- Layout shell ---------- */
+  .shell{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    min-height:100vh;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    position:sticky;
+    top:0;
+    height:100vh;
+    padding:44px 34px;
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+  }
+  .avatar{
+    width:64px; height:64px;
+    border-radius:16px;
+    background:linear-gradient(155deg, var(--accent), var(--gold));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Manrope', sans-serif;
+    font-weight:800;
+    font-size:22px;
+    color:#1b1220;
+    margin-bottom:20px;
+  }
+  .sidebar h1{
+    font-family:'Manrope', sans-serif;
+    font-weight:700;
+    font-size:21px;
+    margin:0 0 4px;
+  }
+  .sidebar .role{
+    font-size:13.5px;
+    color:var(--muted);
+    margin-bottom:28px;
+    line-height:1.5;
+  }
+  .sidebar nav ul{
+    list-style:none;
+    padding:0; margin:0 0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .sidebar nav a{
+    text-decoration:none;
+    font-size:14.5px;
+    color:var(--muted);
+    padding:9px 12px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .sidebar nav a .b{
+    width:5px; height:5px;
+    border-radius:50%;
+    background:var(--muted);
+    transition:background 0.2s ease;
+  }
+  .sidebar nav a:hover, .sidebar nav a:focus-visible{
+    background:var(--panel-2);
+    color:var(--ink);
+  }
+  .sidebar nav a:hover .b{ background:var(--accent); }
+
+  .sidebar .foot{
+    padding-top:28px;
+    border-top:1px solid var(--line);
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px 14px;
+    font-size:12.5px;
+  }
+  .sidebar .foot a{
+    text-decoration:none;
+    color:var(--muted);
+    transition:color 0.2s ease;
+  }
+  .sidebar .foot a:hover{ color:var(--accent); }
+
+  /* ---------- Main ---------- */
+  main{ min-width:0; }
+  .container{ max-width:760px; padding:0 56px; }
+
+  section{ padding:76px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--accent);
+    background:var(--accent-soft);
+    padding:6px 12px;
+    border-radius:20px;
+    margin-bottom:22px;
+  }
+  .tag .b{ width:6px; height:6px; border-radius:50%; background:var(--accent); }
+
+  h2{
+    font-family:'Manrope', sans-serif;
+    font-weight:700;
+    font-size:28px;
+    margin:0 0 34px;
+  }
+
+  /* ---------- Home ---------- */
+  #home{ padding-top:64px; }
+  #home h1{
+    font-family:'Manrope', sans-serif;
+    font-weight:800;
+    font-size:clamp(32px, 4.2vw, 48px);
+    line-height:1.15;
+    margin:0 0 24px;
+    letter-spacing:-0.5px;
+  }
+  #home h1 .hl{ color:var(--accent); }
+  #home .lede{
+    color:var(--muted);
+    font-size:17px;
+    max-width:540px;
+    margin:0 0 36px;
+  }
+  .btn-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:52px; }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 24px;
+    font-weight:600;
+    font-size:14.5px;
+    text-decoration:none;
+    border-radius:10px;
+    background:var(--accent);
+    color:#1b1220;
+    transition:transform 0.15s ease, opacity 0.2s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); opacity:0.92; }
+  .btn.ghost{
+    background:transparent;
+    color:var(--ink);
+    border:1px solid var(--line);
+  }
+  .btn.ghost:hover{ border-color:var(--accent); }
+
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .stat{
+    background:var(--panel);
+    padding:22px 20px;
+  }
+  .stat .num{
+    font-family:'Manrope', sans-serif;
+    font-weight:800;
+    font-size:26px;
+    color:var(--gold);
+  }
+  .stat .lbl{
+    font-size:13px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  @media (max-width:560px){ .stat-row{ grid-template-columns:1fr; } }
+
+  /* ---------- About ---------- */
+  #about p{ color:var(--muted); max-width:620px; margin:0 0 18px; }
+  #about p strong{ color:var(--ink); }
+  .about-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:16px;
+    margin-top:30px;
+  }
+  .about-item{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 20px;
+  }
+  .about-item .k{ font-size:12.5px; color:var(--muted); margin-bottom:6px; }
+  .about-item .v{ font-family:'Manrope', sans-serif; font-weight:600; font-size:15px; }
+
+  @media (max-width:520px){ .about-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- Skills — grouped clusters, not numbered ---------- */
+  .skill-cluster{ margin-bottom:30px; }
+  .skill-cluster:last-child{ margin-bottom:0; }
+  .skill-cluster .cluster-name{
+    font-family:'Manrope', sans-serif;
+    font-weight:700;
+    font-size:15.5px;
+    margin-bottom:14px;
+    color:var(--gold);
+  }
+  .pill-row{ display:flex; flex-wrap:wrap; gap:10px; }
+  .pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    padding:8px 14px;
+    border-radius:8px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    color:var(--ink);
+  }
+
+  /* ---------- Experience timeline ---------- */
+  .timeline{ position:relative; padding-left:28px; }
+  .timeline::before{
+    content:""; position:absolute; left:4px; top:6px; bottom:6px; width:1px; background:var(--line);
+  }
+  .role-item{ position:relative; padding-bottom:38px; }
+  .role-item:last-child{ padding-bottom:0; }
+  .role-item::before{
+    content:""; position:absolute; left:-28px; top:4px; width:9px; height:9px;
+    border-radius:50%; background:var(--bg); border:2px solid var(--accent);
+  }
+  .role-item .years{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--muted); margin-bottom:6px; }
+  .role-item h3{ font-family:'Manrope', sans-serif; font-weight:700; font-size:18px; margin:0 0 3px; }
+  .role-item .org{ font-size:14px; color:var(--accent); margin-bottom:10px; }
+  .role-item ul{ margin:0; padding-left:18px; color:var(--muted); max-width:560px; font-size:14.5px; }
+  .role-item ul li{ margin-bottom:6px; }
+  .role-item ul li:last-child{ margin-bottom:0; }
+  .role-item ul li strong{ color:var(--ink); }
+
+  /* ---------- Projects ---------- */
+  .project{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:26px 28px;
+    margin-bottom:16px;
+  }
+  .project:last-child{ margin-bottom:0; }
+  .project .project-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    margin-bottom:10px;
+  }
+  .project h3{ font-family:'Manrope', sans-serif; font-weight:700; font-size:19px; margin:0; }
+  .project .period{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted); white-space:nowrap; padding-top:4px; }
+  .project p{ color:var(--muted); margin:0 0 16px; font-size:15px; }
+  .project .tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .project .tags span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--gold);
+  }
+  .project .tags span:not(:last-child)::after{ content:"·"; margin-left:8px; color:var(--line); }
+
+  /* ---------- Why work with me ---------- */
+  .why-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  .why-item h4{
+    font-family:'Manrope', sans-serif;
+    font-weight:700;
+    font-size:16px;
+    margin:0 0 10px;
+  }
+  .why-item p{ color:var(--muted); font-size:14.5px; margin:0; }
+
+  @media (max-width:640px){ .why-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- Education ---------- */
+  .edu-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  .edu-item{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:20px 22px;
+  }
+  .edu-item .deg{ font-family:'Manrope', sans-serif; font-weight:700; font-size:15.5px; margin-bottom:6px; }
+  .edu-item .sch{ font-size:13.5px; color:var(--muted); }
+  @media (max-width:560px){ .edu-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- Contact ---------- */
+  #contact{ padding-bottom:100px; }
+  #contact p{ color:var(--muted); max-width:480px; margin:0 0 30px; }
+  .contact-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .contact-row a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    font-size:14px;
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .contact-row a:hover{ border-color:var(--accent); color:var(--accent); }
+
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width:900px){
+    .shell{ grid-template-columns:1fr; }
+    .sidebar{
+      position:relative;
+      height:auto;
+      flex-direction:row;
+      align-items:center;
+      flex-wrap:wrap;
+      padding:22px 24px;
+      border-right:none;
+      border-bottom:1px solid var(--line);
+    }
+    .avatar{ width:46px; height:46px; font-size:16px; margin-bottom:0; margin-right:14px; border-radius:12px; }
+    .sidebar h1{ font-size:17px; }
+    .sidebar .role{ margin-bottom:0; font-size:12px; }
+    .sidebar nav{ display:none; }
+    .sidebar .foot{ display:none; }
+    .container{ padding:0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="avatar">PS</div>
+    <h1>Priyesh Shukla</h1>
+    <div class="role">Senior Frontend Developer<br>Angular + React · 9+ Years</div>
+    <nav>
+      <ul>
+        <li><a href="#home"><span class="b"></span>Home</a></li>
+        <li><a href="#about"><span class="b"></span>About</a></li>
+        <li><a href="#skills"><span class="b"></span>Skills</a></li>
+        <li><a href="#experience"><span class="b"></span>Experience</a></li>
+        <li><a href="#projects"><span class="b"></span>Projects</a></li>
+        <li><a href="#education"><span class="b"></span>Education</a></li>
+        <li><a href="#contact"><span class="b"></span>Contact</a></li>
+      </ul>
+    </nav>
+    <div class="foot">
+      <a href="mailto:priyeshshukla637@gmail.com">Email</a>
+      <a href="https://github.com/priyesh-shukla/" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/shukla-priyesh/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="container">
+
+      <section id="home">
+        <div class="tag"><span class="b"></span>Lucknow, Uttar Pradesh · Open to senior roles</div>
+        <h1>Building enterprise frontends that scale — <span class="hl">Angular & React, 9+ years.</span></h1>
+        <p class="lede">Senior Frontend Developer with 9+ years building enterprise web applications. Deep expertise across Angular (8–20), React.js, TypeScript, RxJS, NgRx, Redux Toolkit, and micro-frontend architecture — with a track record of mentoring teams and shipping platforms used by 1000+ clients.</p>
+        <div class="btn-row">
+          <a class="btn" href="#projects">View projects</a>
+          <a class="btn ghost" href="#contact">Contact me</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><div class="num">9+</div><div class="lbl">Years experience</div></div>
+          <div class="stat"><div class="num">1000+</div><div class="lbl">Clients served</div></div>
+          <div class="stat"><div class="num">5</div><div class="lbl">Engineers mentored</div></div>
+        </div>
+      </section>
+
+      <section id="about">
+        <h2>About me</h2>
+        <p><strong>Priyesh Shukla</strong> — a Senior Frontend Developer with 9+ years of experience building enterprise web applications using Angular and React.js. My expertise spans Angular, React.js, TypeScript, JavaScript, RxJS, NgRx, Redux Toolkit, React Hooks, micro frontends, REST APIs, and frontend architecture.</p>
+        <p>Beyond hands-on development, I currently mentor and guide a team of 3–5 engineers, leading Angular architecture discussions and code reviews across projects — with a focus on reusable component libraries and performance optimization that measurably speeds up delivery.</p>
+        <div class="about-grid">
+          <div class="about-item"><div class="k">Focus</div><div class="v">Frontend architecture &amp; leadership</div></div>
+          <div class="about-item"><div class="k">Based in</div><div class="v">Lucknow, Uttar Pradesh</div></div>
+          <div class="about-item"><div class="k">Currently</div><div class="v">OptimEyes AI</div></div>
+          <div class="about-item"><div class="k">Phone</div><div class="v">+91 88265 32912</div></div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <h2>Skills &amp; tools</h2>
+        <div class="skill-cluster">
+          <div class="cluster-name">Frontend</div>
+          <div class="pill-row">
+            <span class="pill">Angular 8–20</span><span class="pill">React.js</span><span class="pill">TypeScript</span><span class="pill">JavaScript (ES6+)</span><span class="pill">RxJS</span><span class="pill">NgRx</span><span class="pill">Redux Toolkit</span><span class="pill">React Hooks</span><span class="pill">React Router</span><span class="pill">Context API</span><span class="pill">HTML5</span><span class="pill">CSS3</span>
+          </div>
+        </div>
+        <div class="skill-cluster">
+          <div class="cluster-name">Architecture</div>
+          <div class="pill-row">
+            <span class="pill">Micro Frontend</span><span class="pill">Module Federation</span><span class="pill">Component-Driven Architecture</span><span class="pill">Progressive Web Apps</span>
+          </div>
+        </div>
+        <div class="skill-cluster">
+          <div class="cluster-name">UI / Styling</div>
+          <div class="pill-row">
+            <span class="pill">Angular Material</span><span class="pill">Material UI</span><span class="pill">PrimeNG</span><span class="pill">Bootstrap</span><span class="pill">SCSS</span>
+          </div>
+        </div>
+        <div class="skill-cluster">
+          <div class="cluster-name">Testing</div>
+          <div class="pill-row">
+            <span class="pill">Jasmine</span><span class="pill">Karma</span>
+          </div>
+        </div>
+        <div class="skill-cluster">
+          <div class="cluster-name">DevOps / Tools</div>
+          <div class="pill-row">
+            <span class="pill">Git</span><span class="pill">GitHub</span><span class="pill">GitLab</span><span class="pill">CI/CD</span><span class="pill">GitHub Actions</span><span class="pill">JIRA</span><span class="pill">Postman</span>
+          </div>
+        </div>
+        <div class="skill-cluster">
+          <div class="cluster-name">Other</div>
+          <div class="pill-row">
+            <span class="pill">REST API Integration</span><span class="pill">WebSockets</span><span class="pill">SSE</span><span class="pill">Firebase</span><span class="pill">Ionic</span><span class="pill">Axios</span><span class="pill">Vite</span><span class="pill">Next.js</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience">
+        <h2>Experience</h2>
+        <div class="timeline">
+          <div class="role-item">
+            <div class="years">January 2024 — Present</div>
+            <h3>Senior Software Engineer</h3>
+            <div class="org">OptimEyes AI</div>
+            <ul>
+              <li>Designed Angular 17 real-time dashboards using Server-Sent Events, replacing WebSocket architecture and improving live update efficiency.</li>
+              <li>Built reusable Angular component libraries, reducing feature development time by <strong>25%</strong>.</li>
+              <li>Designed data ingestion workflows for Excel, CSV, and PDF upload, cutting manual validation effort by <strong>40%</strong>.</li>
+              <li>Built the Enterprise Risk &amp; Compliance Platform (TTEM) supporting PwC Control Testing, SOX 404, and DORA compliance monitoring.</li>
+              <li>Mentor and guide a team of 3–5 engineers on Angular architecture, coding standards, and code reviews.</li>
+            </ul>
+          </div>
+          <div class="role-item">
+            <div class="years">July 2021 — August 2023</div>
+            <h3>Senior Software Engineer</h3>
+            <div class="org">Do Points Marketing Services Pvt. Ltd.</div>
+            <ul>
+              <li>Developed Angular and Ionic hybrid mobile applications with Firebase notifications, increasing user engagement by <strong>25%</strong>.</li>
+              <li>Built the Revohloo Admin Portal using Angular Material for multimedia content management.</li>
+              <li>Collaborated closely with Java and MySQL backend teams to deliver seamless REST API integration.</li>
+            </ul>
+          </div>
+          <div class="role-item">
+            <div class="years">November 2019 — June 2021</div>
+            <h3>Senior Software Engineer</h3>
+            <div class="org">MyITROnline Consultants Pvt. Ltd.</div>
+            <ul>
+              <li>Led frontend development of the Neonvest Hybrid App (Angular 9, Ionic 4) connecting startups with venture capital investors.</li>
+              <li>Implemented PWA features for the Concord Budget App, enabling offline access.</li>
+              <li>Mentored a team of 3–5 junior developers and enforced Angular coding standards.</li>
+            </ul>
+          </div>
+          <div class="role-item">
+            <div class="years">June 2018 — November 2019</div>
+            <h3>Software Engineer</h3>
+            <div class="org">Bytesbrick InfoSystem Pvt. Ltd.</div>
+            <ul>
+              <li>Built the E-Vidya Hub e-learning portal (Angular 8) with secure payment integration.</li>
+              <li>Improved transaction success rate by <strong>20%</strong> through REST API optimization.</li>
+            </ul>
+          </div>
+          <div class="role-item">
+            <div class="years">March 2016 — April 2018</div>
+            <h3>Software Engineer</h3>
+            <div class="org">Indiafin Technologies Limited</div>
+            <ul>
+              <li>Developed financial web applications using Angular, HTML, CSS, and JavaScript.</li>
+              <li>Reduced post-release defects by <strong>15%</strong> using Jasmine and Karma automated testing.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h2>Selected projects</h2>
+
+        <div class="project">
+          <div class="project-top">
+            <h3>Enterprise Risk &amp; Compliance Platform (TTEM)</h3>
+            <div class="period">2024 – Present</div>
+          </div>
+          <p>Third-party Threat Exposure Management platform supporting PwC Control Testing, SOX 404, and DORA regulatory compliance monitoring.</p>
+          <div class="tags"><span>Angular 17</span><span>SSE</span><span>RxJS</span><span>Compliance</span></div>
+        </div>
+
+        <div class="project">
+          <div class="project-top">
+            <h3>Enterprise Cybersecurity Analytics Portal</h3>
+            <div class="period">2024 – Present</div>
+          </div>
+          <p>Centralized Risk Register module and real-time Cyber Dashboard giving security teams enterprise-wide visibility into risk exposure.</p>
+          <div class="tags"><span>Angular</span><span>Real-time Dashboards</span><span>Cybersecurity</span></div>
+        </div>
+
+        <div class="project">
+          <div class="project-top">
+            <h3>Neonvest Hybrid App</h3>
+            <div class="period">2019 – 2021</div>
+          </div>
+          <p>Hybrid mobile app connecting early-stage startups with venture capital investors, built for cross-platform reach.</p>
+          <div class="tags"><span>Angular 9</span><span>Ionic 4</span></div>
+        </div>
+
+        <div class="project">
+          <div class="project-top">
+            <h3>Revohloo Admin Portal</h3>
+            <div class="period">2021 – 2023</div>
+          </div>
+          <p>Admin portal for multimedia content management, built with Angular Material for a clean, scalable UI.</p>
+          <div class="tags"><span>Angular</span><span>Angular Material</span></div>
+        </div>
+      </section>
+
+      <section id="why">
+        <h2>Why work with me</h2>
+        <div class="why-grid">
+          <div class="why-item">
+            <h4>Leads while building</h4>
+            <p>Currently mentoring 3–5 engineers on Angular architecture and code review practices, without stepping away from hands-on delivery.</p>
+          </div>
+          <div class="why-item">
+            <h4>Measurable impact</h4>
+            <p>Cut manual validation effort by 40%, feature development time by 25%, and improved load times by 30% through targeted optimization.</p>
+          </div>
+          <div class="why-item">
+            <h4>Enterprise-scale trust</h4>
+            <p>Delivered applications used by 1000+ clients across compliance, fintech, and risk management domains.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="education">
+        <h2>Education</h2>
+        <div class="edu-grid">
+          <div class="edu-item">
+            <div class="deg">MCA — Master of Computer Applications</div>
+            <div class="sch">IMS Ghaziabad (UPTU)</div>
+          </div>
+          <div class="edu-item">
+            <div class="deg">B.Sc. — Bachelor of Science</div>
+            <div class="sch">CSJM University, Kanpur</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Let's talk</h2>
+        <p>Open to senior frontend and frontend architecture roles, and always happy to talk Angular, React, or micro-frontend design.</p>
+        <div class="contact-row">
+          <a href="mailto:priyeshshukla637@gmail.com">priyeshshukla637@gmail.com</a>
+          <a href="tel:+918826532912">+91 88265 32912</a>
+          <a href="https://github.com/priyesh-shukla/" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/shukla-priyesh/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
